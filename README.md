@@ -3,13 +3,13 @@ Code for the public metrics page of: https://github.com/daguar/calfresh-and-so-c
 
 # Deploy
 
-1. Pull code
+1) Pull code
 
-2. Install stuff
+2) Install stuff
 
 `bundle install`
 
-3. Set ENV vars
+3) Set ENV vars
 
 - PLOTLY_USERNAME
 - PLOTLY_KEY
@@ -17,7 +17,7 @@ Code for the public metrics page of: https://github.com/daguar/calfresh-and-so-c
 - GOOGLE_DRIVE_PASSWORD
 - CLEAN_METRICS_SPREADSHEET_KEY
 
-4. Start server
+4) Start server
 `rails s`
 
 That's it! No databases required at this point.
