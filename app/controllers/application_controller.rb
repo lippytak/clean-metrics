@@ -11,45 +11,38 @@ class ApplicationController < ActionController::Base
     headers = ws.rows[0]
     headers_index = Hash[headers.map.with_index.to_a]
     app_date_column_index = headers_index['app_date']
-    status_column_index = headers_index['status']
+    cumulative_app_col_index = headers_index['cumulative_apps']
+    cumulative_approved_app_col_index = headers_index['cumulative_approved_apps']
+    app_status_col = headers_index['status']
 
-    # Get data into hash
-    submitted_app_dates = []
-    approved_app_dates = []
+    # Format for plotly
+    app_dates = []
+    cumulative_apps = []
+    cumulative_approved_apps = []
     ws.rows[2..-1].each do |r|
       date = Date.strptime(r[app_date_column_index], "%m/%d/%Y")
-      status = r[status_column_index]
-      submitted_app_dates << date
-      if status == "approved"
-        approved_app_dates << date
+      if app_dates.include? date
+        cumulative_apps[-1] = r[cumulative_app_col_index]  
+        cumulative_approved_apps[-1] = r[cumulative_approved_app_col_index]
+      else
+        app_dates << date
+        cumulative_apps << r[cumulative_app_col_index]
+        cumulative_approved_apps << r[cumulative_approved_app_col_index]
       end
     end
-
-    # Submitted apps
-    submitted_apps = Hash.new(0)
-    submitted_app_dates.each { |d| submitted_apps[d] += 1 }
-    sum = 0
-    cumulative_submitted_apps = submitted_apps.values.map { |i| sum += i}
-
-    # Approved apps
-    approved_apps = Hash.new(0)
-    approved_app_dates.each { |d| approved_apps[d] += 1 }
-    approved_app_dates = approved_apps.keys
-    sum = 0
-    cumulative_approved_apps = approved_apps.values.map { |i| sum += i}
 
     # Chartz!
     data = [
       {
         'name' => '# submitted apps',
         'type' => 'scatter',
-        'x' => submitted_app_dates,
-        'y' => cumulative_submitted_apps
+        'x' => app_dates,
+        'y' => cumulative_apps
       },
       {
         'name' => '# approved apps',
         'type' => 'bar',
-        'x' => approved_app_dates,
+        'x' => app_dates,
         'y' => cumulative_approved_apps
       }
     ]
