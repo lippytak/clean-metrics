@@ -20,7 +20,11 @@ class ApplicationController < ActionController::Base
     cumulative_apps = []
     cumulative_approved_apps = []
     ws.rows[2..-1].each do |r|
-      date = Date.strptime(r[app_date_column_index], "%m/%d/%Y")
+      begin
+        date = Date.strptime(r[app_date_column_index], "%m/%d/%Y")
+      rescue
+        next
+      end
       if app_dates.include? date
         cumulative_apps[-1] = r[cumulative_app_col_index]  
         cumulative_approved_apps[-1] = r[cumulative_approved_app_col_index]
