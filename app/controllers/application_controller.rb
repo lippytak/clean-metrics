@@ -97,7 +97,12 @@ class ApplicationController < ActionController::Base
 
   def approval_rate
     # Docs: https://dev.ducksboard.com/apidoc/slot-kinds/#absolute-graphs
-    rate = @cumulative_apps[-1].to_f / @cumulative_approved_apps[-1].to_f
+    rate = @cumulative_approved_apps[-1].to_f / @cumulative_apps[-1].to_f
     render :json => {'value' => rate}
+  end
+
+  def approved_apps
+    # Docs: https://dev.ducksboard.com/apidoc/slot-kinds/#absolute-graphs
+    render :json => {'value' => @cumulative_approved_apps[-1]}
   end
 end
