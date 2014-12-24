@@ -8,6 +8,7 @@ KeepItClean::Application.routes.draw do
   get 'submitted_apps' => 'application#submitted_apps'
   get 'approved_apps' => 'application#approved_apps'
   get 'approval_rate' => 'application#approval_rate'
+  get 'total_approved_apps' => 'application#total_approved_apps'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
