@@ -5,6 +5,11 @@ KeepItClean::Application.routes.draw do
   # You can have the root of your site routed with "root"
   # root 'welcome#index'
   root 'application#index'
+  get 'submitted_apps' => 'application#submitted_apps'
+  get 'approved_apps' => 'application#approved_apps'
+  get 'approval_rate' => 'application#approval_rate'
+  get 'total_approved_apps' => 'application#total_approved_apps'
+  get 'funnel' => 'application#funnel'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
